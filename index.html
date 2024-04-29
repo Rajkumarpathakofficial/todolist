@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        .task-done {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form action="/add" method="post">
+        <input type="text" name="content" placeholder="Enter task">
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        {% for index, task in enumerate(tasks) %}
+            <li class="{% if task['done'] %}task-done{% endif %}">
+                <span>{{ task['content'] }}</span>
+                <form action="/update/{{ index }}" method="post">
+                    <button type="submit">{% if task['done'] %}Undo{% else %}Done{% endif %}</button>
+                </form>
+                <form action="/delete/{{ index }}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
